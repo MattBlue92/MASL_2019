@@ -20,9 +20,11 @@ X = X[sample(nrow(X),nrow(X)),] #permuta i dati
 # fine generazione
 
 #split dei dati
-training = data.frame("Y"=Y[seq(from = 1, to = split)], "X1"=X1[seq(from = 1, to = split)]
+training = data.frame("Y"=Y[seq(from = 1, to = split)], 
+                      "X1"=X1[seq(from = 1, to = split)]
                       ,"X2"=X2[seq(from = 1, to = split)])
-test = data.frame("Y"=Y[seq(from = split+1, to = length(X1))], "X1"= X1[seq(from = split+1, to = length(X1))]
+test = data.frame("Y"=Y[seq(from = split+1, to = length(X1))], 
+                  "X1"= X1[seq(from = split+1, to = length(X1))]
                   ,"X2"=X2[seq(from = split+1, to = length(X1))])
 #fine split data
 
@@ -30,7 +32,7 @@ test = data.frame("Y"=Y[seq(from = split+1, to = length(X1))], "X1"= X1[seq(from
 mseTraining = c()
 mseTest = c()
 for (i in 1:nsim) {
-  myMod = lm(Y~poly(X1, degree = i, raw = TRUE)+X1*X2, data = training)
+  myMod = lm(Y~poly(X1, degree = i, raw = TRUE), data = training)
   mseTraining[i] = mean(myMod$residuals^2)
   mseTest[i] = mean((test$Y-predict.lm(myMod, test))^2)
 }
